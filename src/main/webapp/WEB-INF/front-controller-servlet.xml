@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"	
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                           http://www.springframework.org/schema/mvc 
+                            http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+                           http://www.springframework.org/schema/context
+                            http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+    <mvc:annotation-driven />
+    
+    <!-- Sovelluksemme lähdekooditiedostot sijaitsevat wad tai sen alipakkauksissa-->
+    <context:component-scan base-package="wad" />
+    
+    <!-- Ladataan käyttöön springin view-resolver: luokka, jota käytetään
+    näkymätiedostojen päättelyyn -->    
+    <!-- Nyt Controller-luokkien metodeissa palautettu merkkijono määrittää
+    JSP-tiedoston, joka näytetään -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
+        <property name="prefix" value="/WEB-INF/jsp/" /> 
+        <property name="suffix" value=".jsp" /> 
+    </bean>
+    
+    <!-- tietokantakonfiguraatio -->
+    <import resource="database.xml" />
+</beans>
