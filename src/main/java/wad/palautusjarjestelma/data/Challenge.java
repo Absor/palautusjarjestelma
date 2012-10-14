@@ -18,6 +18,7 @@ public class Challenge implements Serializable {
     private Date publish;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date deadline;
+    private int maxSubmissions;
 
     public Long getId() {
         return id;
@@ -41,5 +42,13 @@ public class Challenge implements Serializable {
 
     public void setDeadline(Date deadline) {
         this.deadline = deadline;
+    }
+
+    public int getMaxSubmissions() {
+        return maxSubmissions;
+    }
+
+    public void setMaxSubmissions(int maxSubmissions) {
+        this.maxSubmissions = maxSubmissions;
     }
 }
