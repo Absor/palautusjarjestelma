@@ -8,6 +8,7 @@
     <body>
         <a href="${pageContext.request.contextPath}/app/users">Users</a><br/>
         <a href="${pageContext.request.contextPath}/app/challenges">Challenges</a><br/>
-        <a href="${pageContext.request.contextPath}/app/submissions">Submissions</a>
+        <a href="${pageContext.request.contextPath}/app/submissions">Submissions</a><br/><br/>
+        <a href="${pageContext.request.contextPath}/j_spring_security_logout">Logout</a>
     </body>
 </html>

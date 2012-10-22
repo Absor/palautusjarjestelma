@@ -9,6 +9,27 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
     http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     -->
     <display-name>Palautusjärjestelmä</display-name>
+    <!-- Tietoturvafiltteri. Huom! Filtterin nimen tulee olla täsmälleen tämä. -->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+    <!-- Ladataan konteksti ja tietoturvakonfiguraatio -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!-- kerrotaan tietoturvakonfiguraation sijainti yllä määritellylle kontekstin lataajalle. -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/security.xml</param-value>
+    </context-param>
+    
     <!-- Filtteri: Kaikki pyynnöt utf-8:ksi -->
     <filter>
         <filter-name>encoding-filter</filter-name>

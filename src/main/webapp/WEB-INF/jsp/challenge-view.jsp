@@ -7,7 +7,8 @@
     </head>
     <body>
         <h1>Challenge</h1>
-        ${challenge.id}<br/><br/>
+        ${challenge.id}<br/>
+        <a href="${challenge.id}/downloadTemplate">Download template</a><br/><br/>
         <a href="${pageContext.request.contextPath}/app/challenges">Back to challenges</a>
     </body>
 </html>

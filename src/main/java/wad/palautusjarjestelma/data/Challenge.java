@@ -6,7 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 public class Challenge implements Serializable {
@@ -19,6 +22,12 @@ public class Challenge implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date deadline;
     private int maxSubmissions;
+    @OneToOne
+    private SavedFile templateFile;
+    private String messageQueueAddress;
+    private String messageQueueName;
+    @Transient
+    private MultipartFile formTemplateFile;
 
     public Long getId() {
         return id;
@@ -50,5 +59,37 @@ public class Challenge implements Serializable {
 
     public void setMaxSubmissions(int maxSubmissions) {
         this.maxSubmissions = maxSubmissions;
+    }
+
+    public SavedFile getTemplateFile() {
+        return templateFile;
+    }
+
+    public void setTemplateFile(SavedFile templateFile) {
+        this.templateFile = templateFile;
+    }
+
+    public String getMessageQueueAddress() {
+        return messageQueueAddress;
+    }
+
+    public void setMessageQueueAddress(String messageQueueAddress) {
+        this.messageQueueAddress = messageQueueAddress;
+    }
+
+    public String getMessageQueueName() {
+        return messageQueueName;
+    }
+
+    public void setMessageQueueName(String messageQueueName) {
+        this.messageQueueName = messageQueueName;
+    }
+
+    public MultipartFile getFormTemplateFile() {
+        return formTemplateFile;
+    }
+
+    public void setFormTemplateFile(MultipartFile formTemplateFile) {
+        this.formTemplateFile = formTemplateFile;
     }
 }
