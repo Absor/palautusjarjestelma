@@ -17,7 +17,7 @@
         <c:if test="${!empty result}">
             <a href="${pageContext.request.contextPath}/app/results/${result.id}">Result</a><br>
         </c:if>
-        <a href="${pageContext.request.contextPath}/app/submissions/${submission.id}/download">Download submission file</a><br/><br>
-        <a href="${pageContext.request.contextPath}/app/submissions">Back to submissions</a>
+        <a href="${pageContext.request.contextPath}/app/submissions/${submission.id}/download">Download submission file</a><br/><br/>
+        <a href="${pageContext.request.contextPath}/app/challenges/${challenge.id}/submissions">Back to submissions</a>
     </body>
 </html>

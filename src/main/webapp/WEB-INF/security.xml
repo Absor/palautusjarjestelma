@@ -19,9 +19,9 @@
 
     <sec:authentication-manager>
         <sec:authentication-provider>
-            <sec:user-service>
-                <sec:user name="t" password="t" authorities="opettaja" />
-            </sec:user-service>
+            <sec:jdbc-user-service data-source-ref="dataSource"
+                                   users-by-username-query="SELECT username,password,enabled FROM users WHERE username=?" 
+                                   authorities-by-username-query="SELECT username,user_role FROM users WHERE username =?"/>
         </sec:authentication-provider>
     </sec:authentication-manager>
 </beans>

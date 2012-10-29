@@ -18,8 +18,10 @@
     
     <jpa:repositories base-package="wad.palautusjarjestelma.repository" />
     
+    <context:component-scan base-package="wad" />
+    
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceUnitName" value="persistenceUnitDev" /> 
+        <property name="persistenceUnitName" value="${persistence.unit}" /> 
         <property name="dataSource" ref="dataSource" />
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter"/>
@@ -35,12 +37,46 @@
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
     
+    <!-- viestijono tuloksille -->
+    <bean id="resultQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="${mq.listen.queuename}" />
+    </bean>
+
+    <!-- yhteyden luomiseen tarvittu tehdas -->
+    <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="${mq.listen.path}" />
+    </bean>
+    
+    <!-- viestijonon kuuntelija -->
+    <bean class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="destination" ref="resultQueue" />
+        <property name="messageListener" ref="submissionResultListener"/>
+    </bean>
+    
     <beans profile="dev,default">
         <!-- ympäristöön liittyvä konfiguraatiotiedosto -->
         <context:property-placeholder location="classpath:development.properties"/>
 
         <!-- muistiin ladattava tietokanta -->
-        <jdbc:embedded-database id="dataSource" type="H2"/> 
+        <jdbc:embedded-database id="dataSource" type="H2"/>
+        
+        <!-- viestijonoasetukset esimerkkiprosessoijalle -->
+        <!-- viestijono -->
+        <bean id="challengeQueue" class="org.apache.activemq.command.ActiveMQQueue">
+            <constructor-arg value="challenge1" />
+        </bean>
+        <!-- JmsTemplate, joka käyttää viestijonoa ja aiemmin määriteltyä yhteystehdasta -->
+        <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+            <property name="connectionFactory" ref="connectionFactory" />
+            <property name="defaultDestination" ref="resultQueue" />
+        </bean>
+        <!-- viestijonon kuuntelija -->
+        <bean class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+            <property name="connectionFactory" ref="connectionFactory" />
+            <property name="destination" ref="challengeQueue" />
+            <property name="messageListener" ref="exampleMessageProcessor"/>
+        </bean>
     </beans>
     
 </beans>

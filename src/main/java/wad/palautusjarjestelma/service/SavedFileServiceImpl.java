@@ -1,9 +1,8 @@
 package wad.palautusjarjestelma.service;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,6 +60,7 @@ public class SavedFileServiceImpl implements SavedFileService {
         SavedFile newSavedFile = new SavedFile();
         newSavedFile.setContentType(file.getContentType());
         newSavedFile.setOriginalFilename(file.getOriginalFilename());
+        newSavedFile.setTimeAdded(new Date());
         try {
             newSavedFile.setFilename(systemFileRepository.saveFile(file.getBytes()));
         } catch (IOException ex) {

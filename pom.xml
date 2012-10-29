@@ -24,19 +24,7 @@
         <jetty.port>8090</jetty.port>
     </properties>
 
-    <dependencies>
-        <!-- tiedostojen vastaanottamista varten -->
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-            <version>1.2.2</version>
-        </dependency>        
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.4</version>
-        </dependency>
-        
+    <dependencies>        
         <!-- Validaatio -->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -218,6 +206,31 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
+            <version>3.1.2.RELEASE</version>
+        </dependency>
+        
+        <!-- tiedostojen vastaanottamista varten -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.2.2</version>
+        </dependency>        
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
+        
+        <!-- ActiveMQ -->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-core</artifactId>
+            <version>5.5.1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
             <version>3.1.2.RELEASE</version>
         </dependency>
         

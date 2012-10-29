@@ -1,5 +1,7 @@
 package wad.palautusjarjestelma.service;
 
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,5 +49,10 @@ public class ChallengeServiceImpl implements ChallengeService {
     @Transactional(readOnly = true)
     public List<Challenge> findAll() {
         return challengeRepository.findAll();
+    }
+
+    @Override
+    public List<Challenge> findByDate(Date date) {
+        return challengeRepository.findByDate(date);
     }
 }

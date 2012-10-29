@@ -15,7 +15,11 @@
                 <input type="submit" value="Poista">
             </form:form>
         </c:forEach>
-        <br/>
-        <a href="${pageContext.request.contextPath}">Main</a>
+        <h1>Add submission</h1>
+        <form:form commandName="submission" action="submissions" method="POST" enctype="multipart/form-data">
+            Submission file: <form:input type="file" path="formSubmissionFile" /><form:errors path="formSubmissionFile" /><br/>
+            <input type="submit">
+        </form:form><br/>
+        <a href="${pageContext.request.contextPath}/app/challenges/${challengeId}">Back to challenge</a>
     </body>
 </html>

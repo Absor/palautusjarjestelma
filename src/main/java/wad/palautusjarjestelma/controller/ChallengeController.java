@@ -1,9 +1,11 @@
 package wad.palautusjarjestelma.controller;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,14 +35,22 @@ public class ChallengeController {
     @Autowired
     private SavedFileService savedFileService;
 
+    @InitBinder
+    public void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm dd.MM.yyyy");
+        CustomDateEditor editor = new CustomDateEditor(dateFormat, false);
+        binder.registerCustomEditor(Date.class, editor);
+    }
+
     @RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
     public String list(@ModelAttribute Challenge challenge, Model model) {
-        model.addAttribute("challenges", challengeService.findAll());
+        model.addAttribute("allChallenges", challengeService.findAll());
+        model.addAttribute("currentChallenges", challengeService.findByDate(new Date()));
         return "challenge-list";
     }
 
     @RequestMapping(value = {"", "/"}, method = RequestMethod.POST)
-    public String add(@ModelAttribute Challenge challenge,
+    public String add(@Valid @ModelAttribute Challenge challenge,
             BindingResult bindingResult, Model model) {
         MultipartFile formFile = challenge.getFormTemplateFile();
         if (!formFile.isEmpty()) {
@@ -48,7 +60,6 @@ public class ChallengeController {
             } else {
                 challenge.setTemplateFile(savedFile);
             }
-
         }
         if (bindingResult.hasErrors()) {
             model.addAttribute("challenges", challengeService.findAll());
@@ -74,7 +85,6 @@ public class ChallengeController {
     @ResponseBody
     public ResponseEntity<byte[]> downloadTemplate(@PathVariable Long challengeId) {
         SavedFile templateFile = challengeService.findById(challengeId).getTemplateFile();
-        System.out.println(templateFile);
         if (templateFile == null) {
             return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);
         }
@@ -87,7 +97,7 @@ public class ChallengeController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(templateFile.getContentType()));
         headers.setContentLength(data.length);
-//        headers.setLastModified(templateFile.getTimestamp().getTime());
+        headers.setLastModified(templateFile.getTimeAdded().getTime());
 
         return new ResponseEntity<byte[]>(data, headers, HttpStatus.OK);
     }

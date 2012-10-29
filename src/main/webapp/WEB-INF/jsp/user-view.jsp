@@ -7,7 +7,10 @@
     </head>
     <body>
         <h1>User</h1>
-        ${user.username}<br/><br/>
+        Username: ${user.username}<br/>
+        Enabled: ${user.enabled}<br/>
+        Role: ${user.role}<br/>
+        Student number: ${user.studentNumber}<br/><br/>
         <a href="${pageContext.request.contextPath}/app/users">Back to users</a>
     </body>
 </html>

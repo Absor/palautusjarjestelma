@@ -11,7 +11,7 @@
                             http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
     <mvc:annotation-driven />
-        
+  
     <!-- Sovelluksemme lähdekooditiedostot sijaitsevat wad tai sen alipakkauksissa-->
     <context:component-scan base-package="wad" />
     
@@ -21,7 +21,7 @@
     JSP-tiedoston, joka näytetään -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
         <property name="prefix" value="/WEB-INF/jsp/" /> 
-        <property name="suffix" value=".jsp" /> 
+        <property name="suffix" value=".jsp" />
     </bean>
     
     <!-- Tiedostojen vastaanottamista varten -->
@@ -29,6 +29,4 @@
         <property name="maxUploadSize" value="16777216"/>
     </bean>
     
-    <!-- tietokantakonfiguraatio -->
-    <import resource="database.xml" />
 </beans>

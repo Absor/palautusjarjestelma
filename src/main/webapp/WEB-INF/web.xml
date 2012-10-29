@@ -24,10 +24,13 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-    <!-- kerrotaan tietoturvakonfiguraation sijainti yllä määritellylle kontekstin lataajalle. -->
+    <!-- kerrotaan konfiguraatioiden sijainti yllä määritellylle kontekstin lataajalle. -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/security.xml</param-value>
+        <param-value>
+            /WEB-INF/context.xml
+            /WEB-INF/security.xml
+        </param-value>
     </context-param>
     
     <!-- Filtteri: Kaikki pyynnöt utf-8:ksi -->
